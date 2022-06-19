@@ -9,18 +9,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
-import modelDAO.AccountDAO;
 
 /**
  *
- * @author Hung
+ * @author Pham_Thai_Ha <>
  */
-public class LoginController extends HttpServlet {
+@WebServlet(name = "Home", urlPatterns = {"/Home"})
+public class Home extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,13 +30,10 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    String u = "anh";
-    String p = "12345";
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        RequestDispatcher disp = request.getRequestDispatcher("login.jsp");
+        RequestDispatcher disp = request.getRequestDispatcher("home.jsp");
         disp.forward(request, response);
         
         response.setContentType("text/html;charset=UTF-8");
@@ -46,10 +42,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet Home</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Home at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,12 +63,6 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if(request.getParameter("logout") != null){
-            HttpSession session = request.getSession();
-            session.removeAttribute("isLoggedIn");
-        }
-        
         processRequest(request, response);
     }
 
@@ -87,28 +77,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String userId = request.getParameter("Userid");
-        String password = request.getParameter("Password");
-        
-        HttpSession session = request.getSession();
-        Account ac = AccountDAO.getAccount(userId);
-        
-        if(ac != null){
-            if(ac.getPassword().equals(password)){
-                session.setAttribute("isLoggedIn", "1");
-                session.setAttribute("userName", ac.getFullName());
-                response.sendRedirect("Home");
-            }
-            else{
-                request.setAttribute("error", "1");
-                processRequest(request, response);
-            }
-        }
-        else{
-            request.setAttribute("error", "1");
-            processRequest(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
