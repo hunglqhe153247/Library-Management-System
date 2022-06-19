@@ -15,7 +15,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Reserved Books</h1>
         <% ArrayList<Book> reserved_books = (ArrayList<Book>)request.getAttribute("reserved_books"); 
         ArrayList<Order> orderOfThisAccount = (ArrayList<Order>)request.getAttribute("orderOfThisAccount");
         %>

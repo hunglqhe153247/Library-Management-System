@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class DBcontext {
     public static Connection getConnection(){
         String username = "sa";
-        String password = "123456";
-        String url = "jdbc:sqlserver://localhost:1433; databaseName=LBM_database";
+        String password = "12345678";
+        String url = "jdbc:sqlserver://localhost:1433; databaseName=LBM_Database";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         } catch (ClassNotFoundException ex) {

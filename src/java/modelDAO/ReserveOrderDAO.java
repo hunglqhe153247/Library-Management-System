@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAL;
+package modelDAO;
 
-import static DAL.BaseDAO.connection;
+import static modelDAO.BaseDAO.connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,9 +44,8 @@ public class ReserveOrderDAO {
         try {
             String sql = "INSERT INTO [reserve_order] VALUES (?, ?, ?);";
             PreparedStatement statement = connection.prepareStatement(sql);
-            
-            statement.setInt(1, bookId);
-            statement.setInt(2, accountId);
+            statement.setInt(1, accountId);
+            statement.setInt(2, bookId);
             statement.setDate(3, reserveDate);
             statement.executeUpdate();
         } catch (SQLException ex) {

@@ -16,7 +16,7 @@
  %>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Book Shelves</h1>
         <table border="1">
             <thead>
                 <tr>
@@ -33,7 +33,7 @@
                     <td><%= b.getName()%></td>
                     <td><%= b.getAuthor()%></td>
                     <td><%= b.getPublisher() %></td>
-                    <td><form name="reserve" action="ReserveOrderController" method="get">
+                    <td><form name="reserve" action="ReserveOrderController" method="post">
                             <input type="hidden" name="id" value="<%= b.getId() %>" />
                             <input type="submit" value="Reserve" />
                         </form></td>

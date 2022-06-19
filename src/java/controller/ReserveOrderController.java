@@ -5,8 +5,8 @@
  */
 package controller;
 
-import DAL.BookDAO;
-import DAL.ReserveOrderDAO;
+import modelDAO.BookDAO;
+import modelDAO.ReserveOrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -57,7 +57,7 @@ public class ReserveOrderController extends HttpServlet {
         }
         request.setAttribute("orderOfThisAccount", orderOfThisAccount);
         request.setAttribute("reserved_books", reserved_books);
-        request.getRequestDispatcher("reserved_books.jsp").include(request, response);
+        request.getRequestDispatcher("reserved_books.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,13 +72,8 @@ public class ReserveOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookId = Integer.parseInt(request.getParameter("id"));
-        long millis=System.currentTimeMillis();  
-        java.sql.Date date=new java.sql.Date(millis);
-        ReserveOrderDAO rdao = new ReserveOrderDAO();
-        rdao.insertOrder(bookId, 1, date);
-        processRequest(request, response);
-          
+        
+          processRequest(request, response);
     }
 
     /**
@@ -92,6 +87,12 @@ public class ReserveOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int bookId = Integer.parseInt(request.getParameter("id"));
+        long millis=System.currentTimeMillis();  
+        java.sql.Date date=new java.sql.Date(millis);
+        ReserveOrderDAO rdao = new ReserveOrderDAO();
+        rdao.insertOrder(bookId, 1, date);
+        
         processRequest(request, response);
     }
 
