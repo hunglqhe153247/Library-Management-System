@@ -13,6 +13,7 @@
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< Updated upstream
         <servlet-name>Home</servlet-name>
         <servlet-class>controller.Home</servlet-class>
     </servlet>
@@ -23,12 +24,21 @@
     <servlet>
         <servlet-name>PayFineController</servlet-name>
         <servlet-class>controller.PayFineController</servlet-class>
+=======
+        <servlet-name>BookshelvesController</servlet-name>
+        <servlet-class>controller.BookshelvesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReserveOrderController</servlet-name>
+        <servlet-class>controller.ReserveOrderController</servlet-class>
+>>>>>>> Stashed changes
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< Updated upstream
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
     </servlet-mapping>
@@ -39,6 +49,14 @@
     <servlet-mapping>
         <servlet-name>PayFineController</servlet-name>
         <url-pattern>/PayFineController</url-pattern>
+=======
+        <servlet-name>BookshelvesController</servlet-name>
+        <url-pattern>/BookshelvesController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReserveOrderController</servlet-name>
+        <url-pattern>/ReserveOrderController</url-pattern>
+>>>>>>> Stashed changes
     </servlet-mapping>
     <session-config>
         <session-timeout>

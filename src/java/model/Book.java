@@ -10,26 +10,23 @@ package model;
  * @author Hung
  */
 public class Book {
-    String id;
+    int id;
     String name;
     String author;
-    String year;
+    String publisher;
 
-    public Book() {
-    }
-
-    public Book(String id, String name, String author, String year) {
+    public Book(int id, String name, String author, String publisher) {
         this.id = id;
         this.name = name;
         this.author = author;
-        this.year = year;
+        this.publisher = publisher;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,12 +46,16 @@ public class Book {
         this.author = author;
     }
 
-    public String getYear() {
-        return year;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
+
+    public Book() {
+    }
+
     
 }
