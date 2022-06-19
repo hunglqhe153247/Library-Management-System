@@ -64,5 +64,6 @@ public class Order {
     public void setReserveDate(Date reserveDate) {
         this.reserveDate = reserveDate;
     }
+
     
 }

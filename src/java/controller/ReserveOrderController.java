@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Book;
 import model.Order;
 
@@ -46,12 +47,16 @@ public class ReserveOrderController extends HttpServlet {
         ArrayList<Order> orderOfThisAccount = new ArrayList<Order>();
         BookDAO bdao = new BookDAO();
         ArrayList<Book> books = bdao.getAll();
-        ArrayList<Book> reserved_books= new ArrayList<Book>();
-        for(Order o:orders){
-            if(o.getAccountId()==1){
-                for(Book b:books){
-                    if(b.getId()==o.getBookId())
+        ArrayList<Book> reserved_books = new ArrayList<Book>();
+        HttpSession session = request.getSession();
+        int userid = Integer.parseInt((String) session.getAttribute("userid"));
+        for (Order o : orders) {
+            if (o.getAccountId() == userid) {
+                orderOfThisAccount.add(o);
+                for (Book b : books) {
+                    if (b.getId() == o.getBookId()) {
                         reserved_books.add(b);
+                    }
                 }
             }
         }
@@ -72,8 +77,8 @@ public class ReserveOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-          processRequest(request, response);
+
+        processRequest(request, response);
     }
 
     /**
@@ -88,11 +93,23 @@ public class ReserveOrderController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int bookId = Integer.parseInt(request.getParameter("id"));
-        long millis=System.currentTimeMillis();  
-        java.sql.Date date=new java.sql.Date(millis);
+        HttpSession session = request.getSession();
+        int userid = Integer.parseInt((String) session.getAttribute("userid"));
+
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
         ReserveOrderDAO rdao = new ReserveOrderDAO();
-        rdao.insertOrder(bookId, 1, date);
-        
+        ArrayList<Order> orders = rdao.getAll();
+        int exist = 0;
+        for (Order o : orders) {
+            if (o.getAccountId() == userid && o.getBookId() == bookId) {
+                exist = 1;
+            }
+        }
+        if(exist==0){
+            rdao.insertOrder(bookId, userid, date);
+        }
+
         processRequest(request, response);
     }
 

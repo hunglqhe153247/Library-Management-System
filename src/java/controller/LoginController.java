@@ -98,6 +98,7 @@ public class LoginController extends HttpServlet {
             if(ac.getPassword().equals(password)){
                 session.setAttribute("isLoggedIn", "1");
                 session.setAttribute("userName", ac.getFullName());
+                session.setAttribute("userid", ac.getUserid());
                 response.sendRedirect("Home");
             }
             else{

@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Book;
 import model.Order;
 
 /**
@@ -33,6 +32,7 @@ public class ReserveOrderDAO {
                 s.setId(rs.getInt("id"));
                 s.setAccountId(rs.getInt("accountId"));
                 s.setBookId(rs.getInt("bookId"));
+                s.setReserveDate(rs.getDate("reserveDate"));
                 orderList.add(s);
             }
         } catch (SQLException ex) {
@@ -40,7 +40,8 @@ public class ReserveOrderDAO {
         }
         return orderList;
     }
-        public static void insertOrder(int bookId, int accountId, Date reserveDate) {
+
+    public static void insertOrder(int bookId, int accountId, Date reserveDate) {
         try {
             String sql = "INSERT INTO [reserve_order] VALUES (?, ?, ?);";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -51,5 +52,42 @@ public class ReserveOrderDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void renewBook(int id, int accountId, int bookId, Date reserveDate) {
+        try {
+            String sql = "Update [reserve_order] SET  reserveDate = ? WHERE accountId = ? and bookId = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setDate(1, reserveDate);
+            statement.setInt(2, accountId);
+            statement.setInt(3, bookId);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        public static Order getOrderByAccountIdAndBookId(int accountId, int bookId) {
+        try {
+            String sql = "SELECT *"
+                    + "  FROM [reserve_order]\n"
+                    + "  where accountId = ? and bookId = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, accountId);
+            statement.setInt(2, bookId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Order s = new Order();
+                s.setId(rs.getInt("id"));
+                s.setAccountId(rs.getInt("accountId"));
+                s.setBookId(rs.getInt("bookId"));
+                s.setReserveDate(rs.getDate("reserveDate"));
+                return s;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

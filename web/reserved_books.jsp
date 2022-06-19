@@ -35,9 +35,15 @@
                     <% for(Order o:orderOfThisAccount){ 
                         if(o.getBookId()==b.getId()){%>
                     <td><%= o.getReserveDate() %></td>
-                    
+                    <% break;}} %>
+                    <td>
+                        <form name="Renew" action="RenewBookController" method="POST">
+                            <input type="hidden" name="bookId" value="<%= b.getId()%>" />
+                            <input type="submit" value="Renew" />
+                        </form>
+                    </td>
                 </tr>
-                <% }}} %>  
+                <% } %>  
             </tbody>
         </table>
 
