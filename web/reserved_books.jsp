@@ -37,7 +37,7 @@
                     <td><%= o.getReserveDate() %></td>
                     <% break;}} %>
                     <td>
-                        <form name="Renew" action="RenewBookController" method="POST">
+                        <form name="Renew" action="RenewBookController" method="post">
                             <input type="hidden" name="bookId" value="<%= b.getId()%>" />
                             <input type="submit" value="Renew" />
                         </form>

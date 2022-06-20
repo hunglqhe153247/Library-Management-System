@@ -38,15 +38,15 @@ public class RenewBookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookId = Integer.parseInt(request.getParameter("id"));
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
         HttpSession session = request.getSession();
         int userid = Integer.parseInt((String) session.getAttribute("userid"));
         ReserveOrderDAO rdao = new ReserveOrderDAO();
         Order order = rdao.getOrderByAccountIdAndBookId(userid, bookId);
         order.setReserveDate(Date.valueOf(order.getReserveDate().toLocalDate().plusDays(7)));
+        rdao.renewBook(order.getAccountId(),order.getBookId(),order.getReserveDate());
         processRequest(request, response);
     }
-
 
     @Override
     public String getServletInfo() {

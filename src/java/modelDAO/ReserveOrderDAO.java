@@ -54,7 +54,7 @@ public class ReserveOrderDAO {
         }
     }
 
-    public static void renewBook(int id, int accountId, int bookId, Date reserveDate) {
+    public static void renewBook(int accountId, int bookId, Date reserveDate) {
         try {
             String sql = "Update [reserve_order] SET  reserveDate = ? WHERE accountId = ? and bookId = ?";
             PreparedStatement statement = connection.prepareStatement(sql);

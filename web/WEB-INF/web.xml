@@ -36,6 +36,10 @@
         <servlet-name>RenewBookController</servlet-name>
         <servlet-class>controller.RenewBookController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RequestNewBookController</servlet-name>
+        <servlet-class>controller.RequestNewBookController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>RenewBookController</servlet-name>
         <url-pattern>/RenewBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestNewBookController</servlet-name>
+        <url-pattern>/RequestNewBookController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

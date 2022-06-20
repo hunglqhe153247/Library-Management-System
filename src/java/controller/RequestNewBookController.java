@@ -5,30 +5,22 @@
  */
 package controller;
 
-import modelDAO.BookDAO;
-import modelDAO.ReserveOrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Book;
-import model.Order;
+import modelDAO.BookDAO;
+import modelDAO.RequestDAO;
 
 /**
  *
  * @author Hung
  */
-public class ReserveOrderController extends HttpServlet {
+public class RequestNewBookController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,28 +34,18 @@ public class ReserveOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ReserveOrderDAO dao = new ReserveOrderDAO();
-        ArrayList<Order> orders = dao.getAll();
-        ArrayList<Order> orderOfThisAccount = new ArrayList<Order>();
-        BookDAO bdao = new BookDAO();
-        ArrayList<Book> books = bdao.getAll();
-        ArrayList<Book> reserved_books = new ArrayList<Book>();
-        HttpSession session = request.getSession();
-        String uid = (String)session.getAttribute("userid");
-        int userid = Integer.parseInt(uid);
-        for (Order o : orders) {
-            if (o.getAccountId() == userid) {
-                orderOfThisAccount.add(o);
-                for (Book b : books) {
-                    if (b.getId() == o.getBookId()) {
-                        reserved_books.add(b);
-                    }
-                }
-            }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RequestNewBookController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RequestNewBookController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        request.setAttribute("orderOfThisAccount", orderOfThisAccount);
-        request.setAttribute("reserved_books", reserved_books);
-        request.getRequestDispatcher("reserved_books.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -78,7 +60,6 @@ public class ReserveOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         processRequest(request, response);
     }
 
@@ -93,24 +74,20 @@ public class ReserveOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookId = Integer.parseInt(request.getParameter("id"));
-        HttpSession session = request.getSession();
-        int userid = Integer.parseInt((String) session.getAttribute("userid"));
-
-        long millis = System.currentTimeMillis();
-        java.sql.Date date = new java.sql.Date(millis);
-        ReserveOrderDAO rdao = new ReserveOrderDAO();
-        ArrayList<Order> orders = rdao.getAll();
-        int exist = 0;
-        for (Order o : orders) {
-            if (o.getAccountId() == userid && o.getBookId() == bookId) {
-                exist = 1;
-            }
+        BookDAO dao = new BookDAO();
+        ArrayList<Book> books = dao.getAll();
+        String name = request.getParameter("name");
+        String author = request.getParameter("author");
+        RequestDAO rdao = new RequestDAO();
+        Boolean exist = false;
+        for(Book b: books){
+            if(b.getName().equals(name)&&b.getAuthor().equals(author))
+                exist=true;
         }
-        if(exist==0){
-            rdao.insertOrder(bookId, userid, date);
+        if(exist==false){
+            rdao.insertRequest(name, author);
         }
-
+        
         processRequest(request, response);
     }
 
