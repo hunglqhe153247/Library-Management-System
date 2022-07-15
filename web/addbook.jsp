@@ -16,7 +16,7 @@
     <body>
         <jsp:include page="header.jsp" />
         <div class="container">
-            <form action="RequestNewBookController" method="POST">
+            <form action="AddNewBookController" method="POST">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Book Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter book" name="name" value="">
@@ -25,6 +25,10 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Author</label>
                     <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Author name" name="author" value="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Publisher</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Publisher name" name="publisher" value="">
                 </div>
                 <input type="submit" value="Submit" class="btn btn-primary"/>
             </form>

@@ -20,7 +20,7 @@ import modelDAO.RequestDAO;
  *
  * @author Hung
  */
-public class RequestNewBookController extends HttpServlet {
+public class AddNewBookController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,7 @@ public class RequestNewBookController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("request.jsp").include(request, response);
+        request.getRequestDispatcher("BookshelvesController").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,21 +63,20 @@ public class RequestNewBookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BookDAO dao = new BookDAO();
+                BookDAO dao = new BookDAO();
         ArrayList<Book> books = dao.getAll();
         String name = request.getParameter("name");
         String author = request.getParameter("author");
-        String userId = (String) request.getSession().getAttribute("userid");
-        RequestDAO rdao = new RequestDAO();
+        String publisher = request.getParameter("publisher");
+        
         Boolean exist = false;
         for(Book b: books){
             if(b.getName().equals(name)&&b.getAuthor().equals(author))
                 exist=true;
         }
         if(exist==false){
-            rdao.insertRequest(name, author, userId);
+            dao.insertBook(name, author, publisher);
         }
-        
         processRequest(request, response);
     }
 

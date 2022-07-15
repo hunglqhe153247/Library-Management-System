@@ -40,12 +40,13 @@ public class RequestDAO extends BaseDAO{
         }
         return requestList;
     }
-        public static void insertRequest(String name, String author) {
+        public static void insertRequest(String name, String author, String userId) {
         try {
-            String sql = "INSERT INTO [Request] VALUES (?, ?);";
+            String sql = "INSERT INTO [Request] VALUES (?, ?, ?);";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, author);
+            statement.setString(3, userId);
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(RequestDAO.class.getName()).log(Level.SEVERE, null, ex);

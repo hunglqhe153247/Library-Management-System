@@ -40,6 +40,18 @@
         <servlet-name>RequestNewBookController</servlet-name>
         <servlet-class>controller.RequestNewBookController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddNewBookController</servlet-name>
+        <servlet-class>controller.AddNewBookController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBookController</servlet-name>
+        <servlet-class>controller.EditBookController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteReserveBookController</servlet-name>
+        <servlet-class>controller.DeleteReserveBookController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -71,6 +83,18 @@
     <servlet-mapping>
         <servlet-name>RequestNewBookController</servlet-name>
         <url-pattern>/RequestNewBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewBookController</servlet-name>
+        <url-pattern>/AddNewBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBookController</servlet-name>
+        <url-pattern>/EditBookController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteReserveBookController</servlet-name>
+        <url-pattern>/DeleteReserveBookController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

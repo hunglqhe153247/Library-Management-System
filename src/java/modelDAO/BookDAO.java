@@ -39,7 +39,7 @@ public class BookDAO extends BaseDAO {
         return bookList;
     }
 
-    public static Book getBookById(String id) {
+    public static Book getBookById(int id) {
         try {
             String sql = "SELECT [id]\n"
                     + "      ,[name]\n"
@@ -48,7 +48,7 @@ public class BookDAO extends BaseDAO {
                     + "  FROM [books]\n"
                     + "  where id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, id);
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Book s = new Book();
@@ -63,5 +63,32 @@ public class BookDAO extends BaseDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static void insertBook(String name, String author, String publisher) {
+        try {
+            String sql = "INSERT INTO [books] VALUES (?, ?, ?);";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, author);
+            statement.setString(3, publisher);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void editBook(String name, String author, String publisher, int id) {
+        try {
+            String sql = "UPDATE books SET name = ?, author = ?, publisher = ? WHERE id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setString(2, author);
+            statement.setString(3, publisher);
+            statement.setInt(4, id);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

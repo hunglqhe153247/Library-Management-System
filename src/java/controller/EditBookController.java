@@ -7,20 +7,18 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Book;
 import modelDAO.BookDAO;
-import modelDAO.RequestDAO;
 
 /**
  *
  * @author Hung
  */
-public class RequestNewBookController extends HttpServlet {
+public class EditBookController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +32,18 @@ public class RequestNewBookController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("request.jsp").include(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet EditBookController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet EditBookController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +58,11 @@ public class RequestNewBookController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                int id = Integer.parseInt(request.getParameter("id"));
+        BookDAO dao =new BookDAO();
+        Book book = dao.getBookById(id);
+        request.setAttribute("book", book);
+        request.getRequestDispatcher("editbook.jsp").include(request, response);
     }
 
     /**
@@ -63,22 +76,14 @@ public class RequestNewBookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BookDAO dao = new BookDAO();
-        ArrayList<Book> books = dao.getAll();
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String author = request.getParameter("author");
-        String userId = (String) request.getSession().getAttribute("userid");
-        RequestDAO rdao = new RequestDAO();
-        Boolean exist = false;
-        for(Book b: books){
-            if(b.getName().equals(name)&&b.getAuthor().equals(author))
-                exist=true;
-        }
-        if(exist==false){
-            rdao.insertRequest(name, author, userId);
-        }
+        String publisher = request.getParameter("publisher");
+        BookDAO dao = new BookDAO();
+        dao.editBook(name, author, publisher, id);
+        request.getRequestDispatcher("BookshelvesController").include(request, response);
         
-        processRequest(request, response);
     }
 
     /**

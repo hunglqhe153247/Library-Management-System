@@ -19,7 +19,7 @@ import model.Order;
  *
  * @author Hung
  */
-public class ReserveOrderDAO extends BaseDAO{
+public class ReserveOrderDAO extends BaseDAO {
 
     public ArrayList<Order> getAll() {
         ArrayList<Order> orderList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class ReserveOrderDAO extends BaseDAO{
         try {
             String sql = "Update [reserve_order] SET  reserveDate = ? WHERE accountId = ? and bookId = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            
+
             statement.setDate(1, reserveDate);
             statement.setInt(2, accountId);
             statement.setInt(3, bookId);
@@ -67,7 +67,8 @@ public class ReserveOrderDAO extends BaseDAO{
             Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        public static Order getOrderByAccountIdAndBookId(int accountId, int bookId) {
+
+    public static Order getOrderByAccountIdAndBookId(int accountId, int bookId) {
         try {
             String sql = "SELECT *"
                     + "  FROM [reserve_order]\n"
@@ -89,5 +90,18 @@ public class ReserveOrderDAO extends BaseDAO{
             Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public void deleteOrder(int id) {
+        try {
+            String sql = "DELETE FROM reserve_order WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            ResultSet rs = statement.executeQuery();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ReserveOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

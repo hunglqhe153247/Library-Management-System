@@ -20,7 +20,8 @@
     <body>
         <jsp:include page="header.jsp" />
         <div class="container">
-            <h1>Book Shelves</h1>
+            <h1 class="text-center">Book Shelves</h1>
+            <a type="button" class="btn btn-primary text-white mb-1" href="addbook.jsp">Add book</a>
             <table border="1" class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -28,7 +29,7 @@
                         <th>Name</th>
                         <th>Author</th>
                         <th>Publisher</th>
-                        <th></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +39,16 @@
                         <td><%= b.getName()%></td>
                         <td><%= b.getAuthor()%></td>
                         <td><%= b.getPublisher()%></td>
-                        <td><form name="reserve" action="ReserveOrderController" method="post">
+                        <td>
+                            <form name="reserve" action="ReserveOrderController" method="post">
                                 <input type="hidden" name="id" value="<%= b.getId()%>" />
                                 <input type="submit" value="Reserve" />
-                            </form></td>
+                            </form>
+                                <form name="edit" action="EditBookController" method="get">
+                                <input type="hidden" name="id" value="<%= b.getId()%>" />
+                                <input type="submit" value="Edit" />
+                            </form>
+                        </td>
 
                     </tr>
                     <% }%>
