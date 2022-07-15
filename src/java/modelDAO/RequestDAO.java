@@ -29,8 +29,10 @@ public class RequestDAO extends BaseDAO{
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Request s = new Request();
+                s.setId(rs.getInt("id"));
                 s.setName(rs.getString("name"));
                 s.setAuthor(rs.getString("author"));
+                s.setUserId(rs.getInt("userId"));
                 requestList.add(s);
             }
         } catch (SQLException ex) {

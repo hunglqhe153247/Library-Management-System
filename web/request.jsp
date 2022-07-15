@@ -12,6 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="RequestNewBookController" method="POST">
+            Name: <input type="text" name="Name" value="" />
+            <br>
+            Author: <input type="text" name="Author" value="" />
+            <br>
+            <input type="submit" value="Submit" />
+        </form>
     </body>
 </html>

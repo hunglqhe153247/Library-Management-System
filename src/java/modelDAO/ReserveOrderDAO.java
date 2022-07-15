@@ -19,7 +19,7 @@ import model.Order;
  *
  * @author Hung
  */
-public class ReserveOrderDAO {
+public class ReserveOrderDAO extends BaseDAO{
 
     public ArrayList<Order> getAll() {
         ArrayList<Order> orderList = new ArrayList<>();
