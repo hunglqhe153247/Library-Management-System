@@ -31,6 +31,7 @@
                         <th>Book Name</th>
                         <th>Reserve Date</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +56,12 @@
                         <% break;
                                 }
                             }%>
-
+                        <td>
+                            <form name="Renew" action="RenewBookController" method="post">
+                                <input type="hidden" name="id" value="<%= b.getId()%>" />
+                                <input type="submit" value="Renew" />
+                            </form>
+                        </td>
                     </tr>
                     <% }%>  
                 </tbody>

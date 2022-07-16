@@ -26,7 +26,7 @@ public class RenewBookController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("ReserveOrderController").forward(request, response);
+        response.sendRedirect("ReserveOrderController");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class RenewBookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        int bookId = Integer.parseInt(request.getParameter("id"));
         HttpSession session = request.getSession();
         int userid = Integer.parseInt((String) session.getAttribute("userid"));
         ReserveOrderDAO rdao = new ReserveOrderDAO();
