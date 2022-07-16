@@ -34,6 +34,9 @@
                         <a class="nav-link" href="RequestNewBookController">Request New Book</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="PayFineController">Pay Fine</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="FeedbackController">Feedback</a>
                     </li>
                 </ul>

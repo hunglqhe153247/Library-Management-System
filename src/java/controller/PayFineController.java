@@ -7,11 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Fine;
+import modelDAO.FineDAO;
 
 /**
  *
@@ -31,6 +39,22 @@ public class PayFineController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        ArrayList<Fine> fineList = new ArrayList<>();
+        
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("userid");
+        
+        try {
+            fineList = FineDAO.getFineByUser(userId);
+        } catch (SQLException ex) {
+            Logger.getLogger(PayFineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("fineList", fineList);
+        RequestDispatcher disp = request.getRequestDispatcher("fine.jsp");
+        disp.forward(request, response);
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -72,6 +96,14 @@ public class PayFineController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String fineId = request.getParameter("fineId");
+        try {
+            FineDAO.changeFineStatus(fineId);
+        } catch (SQLException ex) {
+            Logger.getLogger(PayFineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         processRequest(request, response);
     }
 

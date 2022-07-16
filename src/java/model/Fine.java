@@ -13,15 +13,17 @@ public class Fine {
     private String fineId;
     private String userId;
     private String amount;
+    private String reserveId;
     private String status;
     
     public Fine() {
     }
 
-    public Fine(String fineId, String userId, String amount, String status) {
+    public Fine(String fineId, String userId, String reserveId, String amount, String status) {
         this.fineId = fineId;
         this.userId = userId;
         this.amount = amount;
+        this.reserveId = reserveId;
         this.status = status;
     }
 
@@ -39,6 +41,14 @@ public class Fine {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getReserveId() {
+        return reserveId;
+    }
+
+    public void setReserveId(String reserveId) {
+        this.reserveId = reserveId;
     }
 
     public String getAmount() {
