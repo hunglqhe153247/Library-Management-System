@@ -44,7 +44,7 @@
                                 <input type="hidden" name="id" value="<%= b.getId()%>" />
                                 <input type="submit" value="Reserve" />
                             </form>
-                                <form name="edit" action="EditBookController" method="get">
+                            <form name="edit" action="EditBookController" method="get">
                                 <input type="hidden" name="id" value="<%= b.getId()%>" />
                                 <input type="submit" value="Edit" />
                             </form>
